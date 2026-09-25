@@ -157,6 +157,7 @@ function updateMeta(){
   $('#chap').textContent=data.chapter;
   $('#libProgress').textContent=pct+'%';
   $('#miniTrack').style.width=pct+'%';
+  const cp=$('#continueProgress'); if(cp) cp.textContent=pct+'% lido';
   localStorage.setItem('sena_progress',String(p));
 }
 
@@ -194,7 +195,7 @@ function setTheme(t){
 }
 
 function setFont(f){
-  document.documentElement.style.setProperty('--reader-font',f==='sans'?'Arial,Helvetica,sans-serif':'Georgia,"Times New Roman",serif');
+  document.documentElement.style.setProperty('--reader-font',f==='sans'?'Inter,Arial,Helvetica,sans-serif':'"EB Garamond",Georgia,"Times New Roman",serif');
   localStorage.setItem('sena_font',f);
   $$('[data-font]').forEach(b=>b.classList.toggle('on',b.dataset.font===f));
   if($('#reader').classList.contains('on')) setTimeout(buildPages,40);
@@ -215,6 +216,10 @@ $('#open').onclick=()=>{
     buildPages();
   },70);
 };
+
+const resume=()=>{ if(!book) return; $('#open').click(); };
+const rt=$('#resumeTop'); if(rt) rt.onclick=resume;
+const rb=$('#resumeBottom'); if(rb) rb.onclick=resume;
 
 $('#back').onclick=()=>{
   $('#reader').classList.remove('on');
@@ -274,6 +279,7 @@ window.addEventListener('resize',()=>{
     const pct=Math.round(saved*100);
     $('#libProgress').textContent=pct+'%';
     $('#miniTrack').style.width=pct+'%';
+    const cp=$('#continueProgress'); if(cp) cp.textContent=pct+'% lido';
 
     book=await loadBook();
     $('#open').disabled=false;
