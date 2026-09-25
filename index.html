@@ -3,86 +3,154 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-  <meta name="theme-color" content="#0b1515">
+  <meta name="theme-color" content="#f2eee6">
+  <meta name="description" content="Biblioteca do Sena — romances, poemas e fragmentos.">
   <title>Biblioteca do Sena</title>
-  <link rel="stylesheet" href="./alexandria.css?v=3">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./alexandria.css?v=4">
 </head>
 <body>
 <section id="library" class="screen on library-screen">
-  <div class="ambient ambient-a"></div><div class="ambient ambient-b"></div>
-  <header class="library-header">
-    <div class="brand-seal">S</div>
-    <div class="brand-copy">
-      <div class="eyebrow">LITERATURA DO SENA · ACERVO PARTICULAR</div>
-      <h1>Biblioteca<br>do Sena</h1>
-      <p>Uma casa para histórias que merecem permanecer.</p>
-    </div>
+  <header class="site-header">
+    <a class="wordmark" href="#" aria-label="Biblioteca do Sena">
+      <span class="monogram">S</span>
+      <span>Biblioteca do Sena</span>
+    </a>
+    <nav class="site-nav" aria-label="Navegação principal">
+      <a href="#acervo">Acervo</a>
+      <a href="#colecoes">Coleções</a>
+      <button id="resumeTop" class="nav-action" type="button">Continuar leitura</button>
+    </nav>
   </header>
 
-  <main class="library-main">
-    <section class="hall">
-      <div class="hall-head">
+  <main>
+    <section class="hero">
+      <div class="hero-copy">
+        <span class="overline">LITERATURA DO SENA</span>
+        <h1>Histórias, poemas e fragmentos para permanecer.</h1>
+        <p>Uma biblioteca pessoal para guardar aquilo que foi escrito com tempo, silêncio e intenção.</p>
+        <a class="text-link" href="#acervo">Explorar o acervo <span>↓</span></a>
+      </div>
+      <aside class="hero-note">
+        <span>Nota do autor</span>
+        <p>“Porque não existe enterro para aquilo que ainda respira em algum lugar.”</p>
+      </aside>
+    </section>
+
+    <section class="section" id="acervo">
+      <div class="section-head">
         <div>
-          <span class="section-kicker">ACERVO I</span>
+          <span class="overline">EM DESTAQUE</span>
           <h2>Romances</h2>
         </div>
-        <div class="collection-count">1 obra</div>
+        <span class="section-count">1 obra</span>
       </div>
 
-      <article class="book-entry">
-        <div class="book-stage">
+      <article class="featured-book">
+        <div class="cover-wrap" aria-hidden="true">
           <div class="book-cover">
-            <div class="cover-ornament top"></div>
-            <div class="cover-inner">
-              <span class="cover-pretitle">UM ROMANCE DE</span>
-              <strong>Tudo o que o<br>Silêncio<br>Não Levou</strong>
-              <span class="cover-author">SENA</span>
-            </div>
-            <div class="cover-ornament bottom"></div>
+            <span class="cover-kicker">ROMANCE</span>
+            <strong>Tudo o que o<br>Silêncio<br>Não Levou</strong>
+            <span class="cover-author">Sena</span>
           </div>
-          <div class="book-shadow"></div>
         </div>
 
-        <div class="book-meta">
-          <span class="catalog">ROMANCE · ACERVO 001</span>
+        <div class="book-info">
+          <span class="book-type">ROMANCE · 001</span>
           <h3>Tudo o que o Silêncio Não Levou</h3>
-          <p class="author">Sena</p>
-          <blockquote>“Porque não existe enterro para aquilo que ainda respira em algum lugar.”</blockquote>
-          <div class="meta-rule"></div>
-          <div class="reading-status">
-            <div><span>PROGRESSO</span><strong id="libProgress">0%</strong></div>
-            <div class="mini-track"><i id="miniTrack"></i></div>
+          <p class="byline">por Sena</p>
+          <p class="synopsis">Uma história sobre o que acontece quando duas pessoas sentem mais do que conseguem dizer — e sobre o preço de transformar silêncio em abrigo.</p>
+
+          <div class="book-progress">
+            <div class="progress-row">
+              <span>Seu progresso</span>
+              <strong id="libProgress">0%</strong>
+            </div>
+            <div class="progress-track"><i id="miniTrack"></i></div>
           </div>
-          <button class="enter-book" id="open" disabled><span>Entrar no livro</span><b>→</b></button>
-          <div class="loading" id="loading">Preparando o acervo…</div>
+
+          <div class="book-actions">
+            <button class="primary-btn" id="open" disabled><span>Entrar no livro</span></button>
+            <span class="loading" id="loading">Preparando o livro…</span>
+          </div>
         </div>
       </article>
     </section>
 
-    <footer class="library-footer">
-      <span>Bibliotheca Sena</span>
-      <span>Est. MMXXVI</span>
-    </footer>
+    <section class="section collections" id="colecoes">
+      <div class="section-head">
+        <div>
+          <span class="overline">BIBLIOTECA</span>
+          <h2>Coleções</h2>
+        </div>
+      </div>
+
+      <div class="collection-grid">
+        <article class="collection-card active">
+          <span class="collection-no">01</span>
+          <div>
+            <h3>Romances</h3>
+            <p>Histórias longas, personagens e silêncios que levam tempo para se revelar.</p>
+          </div>
+          <span class="collection-meta">1 obra</span>
+        </article>
+
+        <article class="collection-card">
+          <span class="collection-no">02</span>
+          <div>
+            <h3>Poemas</h3>
+            <p>Versos curtos e longos sobre amor, ausência, desejo e tudo o que não se diz.</p>
+          </div>
+          <span class="collection-meta">em breve</span>
+        </article>
+
+        <article class="collection-card">
+          <span class="collection-no">03</span>
+          <div>
+            <h3>Fragmentos</h3>
+            <p>Verdades desconfortáveis, pensamentos cotidianos e textos para ler devagar.</p>
+          </div>
+          <span class="collection-meta">em breve</span>
+        </article>
+      </div>
+    </section>
+
+    <section class="continue-strip">
+      <div>
+        <span class="overline">RETOMAR</span>
+        <h2>Continue de onde parou.</h2>
+      </div>
+      <div class="continue-side">
+        <span id="continueProgress">0% lido</span>
+        <button id="resumeBottom" class="secondary-btn" type="button">Continuar leitura</button>
+      </div>
+    </section>
   </main>
+
+  <footer class="site-footer">
+    <span>Literatura do Sena</span>
+    <span>Biblioteca autoral · 2026</span>
+  </footer>
 </section>
 
 <section id="reader" class="screen reader-screen">
   <header class="reader-top">
-    <button class="round-btn" id="back" aria-label="Voltar à biblioteca">‹</button>
+    <button class="reader-icon" id="back" aria-label="Voltar à biblioteca">←</button>
     <div class="reader-heading">
       <small id="chap">Capítulo 1</small>
       <strong>Tudo o que o Silêncio Não Levou</strong>
     </div>
-    <button class="round-btn text-btn" id="aa" aria-label="Ajustes de leitura">Aa</button>
+    <button class="reader-icon text-btn" id="aa" aria-label="Ajustes de leitura">Aa</button>
   </header>
 
   <main class="reading-desk">
     <button class="turn-zone left" id="prev" aria-label="Página anterior"></button>
     <div class="page-shell" id="pageShell">
-      <div class="paper-edge"></div>
       <article class="page-paper" id="pagePaper">
         <div class="page-content" id="pageContent"></div>
-        <div class="page-folio"><span id="folioBook">SENA</span><b id="folioNum">1</b></div>
+        <div class="page-folio"><span id="folioBook">Sena</span><b id="folioNum">1</b></div>
       </article>
     </div>
     <button class="turn-zone right" id="next" aria-label="Próxima página"></button>
@@ -96,16 +164,30 @@
 </section>
 
 <div class="settings-panel" id="panel">
-  <div class="panel-head"><div><span>LEITURA</span><strong>Preferências</strong></div><button id="closePanel">×</button></div>
-  <div class="setting-row"><span>Tema</span><div class="segmented">
-    <button data-theme="paper" class="on">Marfim</button><button data-theme="sepia">Sépia</button><button data-theme="night">Noite</button>
-  </div></div>
-  <div class="setting-row"><span>Tamanho</span><div class="segmented"><button id="minus">A−</button><button id="plus">A+</button></div></div>
-  <div class="setting-row"><span>Fonte</span><div class="segmented"><button data-font="serif" class="on">Literária</button><button data-font="sans">Limpa</button></div></div>
+  <div class="panel-head">
+    <div><span>LEITURA</span><strong>Preferências</strong></div>
+    <button id="closePanel" aria-label="Fechar">×</button>
+  </div>
+  <div class="setting-row">
+    <span>Tema</span>
+    <div class="segmented">
+      <button data-theme="paper" class="on">Marfim</button>
+      <button data-theme="sepia">Sépia</button>
+      <button data-theme="night">Noite</button>
+    </div>
+  </div>
+  <div class="setting-row">
+    <span>Tamanho</span>
+    <div class="segmented"><button id="minus">A−</button><button id="plus">A+</button></div>
+  </div>
+  <div class="setting-row">
+    <span>Fonte</span>
+    <div class="segmented"><button data-font="serif" class="on">Literária</button><button data-font="sans">Limpa</button></div>
+  </div>
   <div class="toc-wrap"><span>SUMÁRIO</span><div class="toc" id="toc"></div></div>
 </div>
 
 <div id="measure" class="measure-page" aria-hidden="true"></div>
-<script src="./alexandria.js?v=3"></script>
+<script src="./alexandria.js?v=4"></script>
 </body>
 </html>
