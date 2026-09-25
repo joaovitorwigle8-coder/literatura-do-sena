@@ -3,58 +3,109 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-  <meta name="theme-color" content="#17130f">
+  <meta name="theme-color" content="#0b1515">
   <title>Biblioteca do Sena</title>
   <link rel="stylesheet" href="./styles.css">
 </head>
 <body>
-  <section id="library" class="screen on">
-    <header class="lib">
-      <div class="ey">LITERATURA DO SENA</div>
-      <h1>Minha Biblioteca</h1>
-      <p class="sub">Seus livros, no seu tempo.</p>
-    </header>
-    <main class="shelf">
-      <article class="card">
-        <div class="cover"><span>TUDO O QUE O<br>SILÊNCIO<br>NÃO LEVOU</span></div>
-        <div class="info">
-          <h2>Tudo o que o Silêncio Não Levou</h2>
-          <p>Sena</p>
-          <button class="primary" id="open" disabled>Carregando livro…</button>
-          <div class="progress" id="libProgress">0% lido</div>
-          <div class="loading" id="loading">Preparando sua biblioteca…</div>
+<section id="library" class="screen on library-screen">
+  <div class="ambient ambient-a"></div><div class="ambient ambient-b"></div>
+  <header class="library-header">
+    <div class="brand-seal">S</div>
+    <div class="brand-copy">
+      <div class="eyebrow">LITERATURA DO SENA · ACERVO PARTICULAR</div>
+      <h1>Biblioteca<br>do Sena</h1>
+      <p>Uma casa para histórias que merecem permanecer.</p>
+    </div>
+  </header>
+
+  <main class="library-main">
+    <section class="hall">
+      <div class="hall-head">
+        <div>
+          <span class="section-kicker">ACERVO I</span>
+          <h2>Romances</h2>
+        </div>
+        <div class="collection-count">1 obra</div>
+      </div>
+
+      <article class="book-entry">
+        <div class="book-stage">
+          <div class="book-cover">
+            <div class="cover-ornament top"></div>
+            <div class="cover-inner">
+              <span class="cover-pretitle">UM ROMANCE DE</span>
+              <strong>Tudo o que o<br>Silêncio<br>Não Levou</strong>
+              <span class="cover-author">SENA</span>
+            </div>
+            <div class="cover-ornament bottom"></div>
+          </div>
+          <div class="book-shadow"></div>
+        </div>
+
+        <div class="book-meta">
+          <span class="catalog">ROMANCE · ACERVO 001</span>
+          <h3>Tudo o que o Silêncio Não Levou</h3>
+          <p class="author">Sena</p>
+          <blockquote>“Porque não existe enterro para aquilo que ainda respira em algum lugar.”</blockquote>
+          <div class="meta-rule"></div>
+          <div class="reading-status">
+            <div><span>PROGRESSO</span><strong id="libProgress">0%</strong></div>
+            <div class="mini-track"><i id="miniTrack"></i></div>
+          </div>
+          <button class="enter-book" id="open" disabled><span>Entrar no livro</span><b>→</b></button>
+          <div class="loading" id="loading">Preparando o acervo…</div>
         </div>
       </article>
-    </main>
-  </section>
-  <section id="reader" class="screen reader">
-    <div class="top">
-      <button class="icon" id="back" aria-label="Voltar">‹</button>
-      <div class="title"><b>Tudo o que o Silêncio Não Levou</b><small id="chap">Capítulo 1</small></div>
-      <button class="icon" id="aa" aria-label="Ajustes">Aa</button>
+    </section>
+
+    <footer class="library-footer">
+      <span>Bibliotheca Sena</span>
+      <span>Est. MMXXVI</span>
+    </footer>
+  </main>
+</section>
+
+<section id="reader" class="screen reader-screen">
+  <header class="reader-top">
+    <button class="round-btn" id="back" aria-label="Voltar à biblioteca">‹</button>
+    <div class="reader-heading">
+      <small id="chap">Capítulo 1</small>
+      <strong>Tudo o que o Silêncio Não Levou</strong>
     </div>
-    <div class="viewport" id="vp"><article class="pages" id="pages"></article></div>
-    <div class="bottom">
-      <span id="pg">1 de 1</span>
-      <input id="slider" type="range" min="0" max="100" value="0" aria-label="Progresso">
-      <span id="pct">0%</span>
+    <button class="round-btn text-btn" id="aa" aria-label="Ajustes de leitura">Aa</button>
+  </header>
+
+  <main class="reading-desk">
+    <button class="turn-zone left" id="prev" aria-label="Página anterior"></button>
+    <div class="page-shell" id="pageShell">
+      <div class="paper-edge"></div>
+      <article class="page-paper" id="pagePaper">
+        <div class="page-content" id="pageContent"></div>
+        <div class="page-folio"><span id="folioBook">SENA</span><b id="folioNum">1</b></div>
+      </article>
     </div>
-  </section>
-  <div class="panel" id="panel">
-    <div class="row"><span>Tema</span><div class="seg">
-      <button data-theme="paper" class="on">Papel</button>
-      <button data-theme="sepia">Sépia</button>
-      <button data-theme="night">Noite</button>
-    </div></div>
-    <div class="row"><span>Tamanho</span><div class="seg">
-      <button id="minus">A−</button><button id="plus">A+</button>
-    </div></div>
-    <div class="row"><span>Fonte</span><div class="seg">
-      <button data-font="serif" class="on">Serifada</button>
-      <button data-font="sans">Limpa</button>
-    </div></div>
-    <div class="toc" id="toc"></div>
-  </div>
-  <script src="./app.js"></script>
+    <button class="turn-zone right" id="next" aria-label="Próxima página"></button>
+  </main>
+
+  <footer class="reader-bottom">
+    <span id="pg">1 de 1</span>
+    <input id="slider" type="range" min="0" max="100" value="0" aria-label="Progresso de leitura">
+    <span id="pct">0%</span>
+  </footer>
+</section>
+
+<div class="settings-panel" id="panel">
+  <div class="panel-head"><div><span>LEITURA</span><strong>Preferências</strong></div><button id="closePanel">×</button></div>
+  <div class="setting-row"><span>Tema</span><div class="segmented">
+    <button data-theme="paper" class="on">Marfim</button><button data-theme="sepia">Sépia</button><button data-theme="night">Noite</button>
+  </div></div>
+  <div class="setting-row"><span>Tamanho</span><div class="segmented"><button id="minus">A−</button><button id="plus">A+</button></div></div>
+  <div class="setting-row"><span>Fonte</span><div class="segmented"><button data-font="serif" class="on">Literária</button><button data-font="sans">Limpa</button></div></div>
+  <div class="toc-wrap"><span>SUMÁRIO</span><div class="toc" id="toc"></div></div>
+</div>
+
+<div id="measure" class="measure-page" aria-hidden="true"></div>
+<script src="./app.js"></script>
 </body>
 </html>
