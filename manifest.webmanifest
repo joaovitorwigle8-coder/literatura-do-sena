@@ -1,0 +1,15 @@
+{
+  "name":"Biblioteca do Sena",
+  "short_name":"Sena",
+  "description":"Biblioteca autoral de romances, poemas e fragmentos.",
+  "start_url":"./",
+  "scope":"./",
+  "display":"standalone",
+  "background_color":"#f3eee4",
+  "theme_color":"#123229",
+  "orientation":"portrait-primary",
+  "icons":[
+    {"src":"./icons/sena-icon.svg","sizes":"any","type":"image/svg+xml","purpose":"any maskable"},
+    {"src":"./icons/sena-icon-180.svg","sizes":"180x180","type":"image/svg+xml"}
+  ]
+}
