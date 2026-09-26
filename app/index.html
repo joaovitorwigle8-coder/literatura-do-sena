@@ -288,6 +288,7 @@ body.reader-night .settings-panel{background:#191d1b;color:#e7e1d8;border-color:
   .poem-paper p{font-size:18px}
 }
 </style>
+  <script src="https://cdn.jsdelivr.net/npm/fflate@0.8.2/umd/index.js"></script>
 </head>
 <body>
 <section id="library" class="screen on library-screen">
@@ -492,8 +493,18 @@ async function loadBook(){
     parts.push((await r.text()).trim());
   }
   const bin=Uint8Array.from(atob(parts.join('')),c=>c.charCodeAt(0));
-  const ds=new DecompressionStream('gzip');
-  const txt=await new Response(new Blob([bin]).stream().pipeThrough(ds)).text();
+  let txt='';
+  if(typeof DecompressionStream!=='undefined'){
+    try{
+      const ds=new DecompressionStream('gzip');
+      txt=await new Response(new Blob([bin]).stream().pipeThrough(ds)).text();
+    }catch(e){ console.warn('Fallback gzip ativado',e); }
+  }
+  if(!txt){
+    if(!window.fflate || !window.fflate.gunzipSync) throw new Error('Descompactador indisponível');
+    const out=window.fflate.gunzipSync(bin);
+    txt=new TextDecoder('utf-8').decode(out);
+  }
   return JSON.parse(txt);
 }
 
@@ -828,7 +839,7 @@ if('serviceWorker' in navigator){
     $('#loading').textContent='Acervo disponível';
   }catch(err){
     console.error(err);
-    $('#loading').textContent='Não foi possível carregar o livro. Atualize a página.';
+    $('#loading').textContent='Não foi possível carregar o livro. Toque para tentar novamente.'; $('#open').disabled=false; $('#open span').textContent='Tentar novamente'; $('#open').onclick=()=>location.reload();
   }
 })();
 </script>
