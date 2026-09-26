@@ -218,8 +218,9 @@ $('#open').onclick=()=>{
 };
 
 const resume=()=>{ if(!book) return; $('#open').click(); };
-const rt=$('#resumeTop'); if(rt) rt.onclick=resume;
-const rb=$('#resumeBottom'); if(rb) rb.onclick=resume;
+['#resumeBottom','#resumeHero','#openFeatured'].forEach(sel=>{const el=$(sel); if(el) el.onclick=resume;});
+const details=$('#bookDetails'); if(details) details.onclick=()=>document.querySelector('#acervo')?.scrollIntoView({behavior:'smooth'});
+const searchBtn=$('#searchBtn'); if(searchBtn) searchBtn.onclick=()=>document.querySelector('#acervo')?.scrollIntoView({behavior:'smooth'});
 
 $('#back').onclick=()=>{
   $('#reader').classList.remove('on');
@@ -267,6 +268,67 @@ window.addEventListener('resize',()=>{
     if($('#reader').classList.contains('on')) buildPages();
   },180);
 });
+
+
+// PWA
+let deferredInstallPrompt=null;
+const installBtn=$('#installBtn');
+const installSheet=$('#installSheet');
+const installHelp=$('#installHelp');
+const confirmInstall=$('#confirmInstall');
+const closeInstall=$('#closeInstall');
+
+function isIOS(){
+  return /iphone|ipad|ipod/i.test(navigator.userAgent);
+}
+function isStandalone(){
+  return window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone===true;
+}
+function openInstallSheet(){
+  if(!installSheet) return;
+  if(isStandalone()){
+    installHelp.textContent='A Biblioteca do Sena já está instalada neste aparelho.';
+    confirmInstall.style.display='none';
+  }else if(isIOS() && !deferredInstallPrompt){
+    installHelp.textContent='No iPhone, toque em Compartilhar e depois em “Adicionar à Tela de Início”.';
+    confirmInstall.style.display='none';
+  }else{
+    installHelp.textContent='Instale para abrir como aplicativo e manter sua leitura sempre à mão.';
+    confirmInstall.style.display='';
+  }
+  installSheet.classList.add('open');
+  installSheet.setAttribute('aria-hidden','false');
+}
+function closeInstallSheet(){
+  if(!installSheet) return;
+  installSheet.classList.remove('open');
+  installSheet.setAttribute('aria-hidden','true');
+}
+window.addEventListener('beforeinstallprompt',e=>{
+  e.preventDefault();
+  deferredInstallPrompt=e;
+});
+window.addEventListener('appinstalled',()=>{
+  deferredInstallPrompt=null;
+  closeInstallSheet();
+  if(installBtn) installBtn.textContent='Instalado';
+});
+if(installBtn) installBtn.onclick=openInstallSheet;
+if(closeInstall) closeInstall.onclick=closeInstallSheet;
+if(installSheet) installSheet.addEventListener('click',e=>{if(e.target===installSheet) closeInstallSheet();});
+if(confirmInstall) confirmInstall.onclick=async()=>{
+  if(deferredInstallPrompt){
+    deferredInstallPrompt.prompt();
+    await deferredInstallPrompt.userChoice;
+    deferredInstallPrompt=null;
+    closeInstallSheet();
+  }else{
+    openInstallSheet();
+  }
+};
+if('serviceWorker' in navigator){
+  window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js').catch(console.error));
+}
 
 (async()=>{
   try{
