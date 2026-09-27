@@ -483,7 +483,7 @@ let pageIndex=0;
 let pagesData=[];
 let fs=19;
 const $=s=>document.querySelector(s);
-const $=s=>Array.from(document.querySelectorAll(s));
+const $$=s=>Array.from(document.querySelectorAll(s));
 
 async function loadBook(){
   const parts=[];
@@ -665,7 +665,7 @@ function buildTOC(){
     const label=it.number==='E'?'Epílogo':'Capítulo '+it.number;
     return '<button data-j="'+i+'"><b>'+label+'</b><br>'+esc(it.title)+'</button>';
   }).join('');
-  $('[data-j]').forEach(btn=>{
+  $$('[data-j]').forEach(btn=>{
     btn.onclick=()=>{
       const target=Number(btn.dataset.j);
       const p=pagesData.findIndex(x=>x.start<=target && x.end>=target);
@@ -680,14 +680,14 @@ function setTheme(t){
   if(t==='sepia') document.body.classList.add('reader-sepia');
   if(t==='night') document.body.classList.add('reader-night');
   localStorage.setItem('sena_theme',t);
-  $('[data-theme]').forEach(b=>b.classList.toggle('on',b.dataset.theme===t));
+  $$('[data-theme]').forEach(b=>b.classList.toggle('on',b.dataset.theme===t));
   if($('#reader').classList.contains('on')) setTimeout(buildPages,40);
 }
 
 function setFont(f){
   document.documentElement.style.setProperty('--reader-font',f==='sans'?'Inter,Arial,Helvetica,sans-serif':'"EB Garamond",Georgia,"Times New Roman",serif');
   localStorage.setItem('sena_font',f);
-  $('[data-font]').forEach(b=>b.classList.toggle('on',b.dataset.font===f));
+  $$('[data-font]').forEach(b=>b.classList.toggle('on',b.dataset.font===f));
   if($('#reader').classList.contains('on')) setTimeout(buildPages,40);
 }
 
@@ -724,8 +724,8 @@ $('#aa').onclick=()=>$('#panel').classList.toggle('open');
 $('#closePanel').onclick=()=>$('#panel').classList.remove('open');
 $('#minus').onclick=()=>resizeText(-1);
 $('#plus').onclick=()=>resizeText(1);
-$('[data-theme]').forEach(b=>b.onclick=()=>setTheme(b.dataset.theme));
-$('[data-font]').forEach(b=>b.onclick=()=>setFont(b.dataset.font));
+$$('[data-theme]').forEach(b=>b.onclick=()=>setTheme(b.dataset.theme));
+$$('[data-font]').forEach(b=>b.onclick=()=>setFont(b.dataset.font));
 $('#slider').oninput=e=>{
   const p=Number(e.target.value)/100;
   go(Math.round(p*(pagesData.length-1)),false);
