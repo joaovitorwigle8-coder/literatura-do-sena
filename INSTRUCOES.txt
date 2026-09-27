@@ -1,0 +1,7 @@
+PACOTE DE ATUALIZAÇÃO — BIBLIOTECA DO SENA
+
+Envie os arquivos deste pacote para a raiz do repositório literatura-do-sena, preservando as pastas:
+- Substitua index.html, app/index.html e sw.js pelos arquivos incluídos.
+- Adicione data/brevidade.json e books/A_Brevidade_das_Coisas_Bonitas.pdf.
+
+Depois de publicar, abra o site e atualize a página. O novo livro aparecerá no acervo. O leitor salva o progresso separadamente e oferece o PDF para download.

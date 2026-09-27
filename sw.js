@@ -1,5 +1,5 @@
-const CACHE='sena-shell-v7';
-const CORE=['./','./index.html','./manifest.webmanifest','./icons/sena-icon.svg','./icons/sena-icon-180.svg','./data/c1.txt','./data/c2.txt','./data/c3.txt','./data/c4.txt','./data/c5.txt'];
+const CACHE='sena-shell-v8';
+const CORE=['./','./index.html','./manifest.webmanifest','./icons/sena-icon.svg','./icons/sena-icon-180.svg','./data/c1.txt','./data/c2.txt','./data/c3.txt','./data/c4.txt','./data/c5.txt','./data/brevidade.json','./books/A_Brevidade_das_Coisas_Bonitas.pdf'];
 self.addEventListener('install',event=>{
   event.waitUntil(caches.open(CACHE).then(cache=>cache.addAll(CORE)));
   self.skipWaiting();

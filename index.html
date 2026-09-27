@@ -153,9 +153,13 @@ repeating-linear-gradient(0deg,rgba(139,111,74,.025) 0 1px,transparent 1px 4px)}
 .category-card.active{background:var(--forest);color:#fff;border-color:var(--forest)}
 .cat-art{font-size:24px;color:#b68d43}.category-card strong{font:600 20px "EB Garamond",serif}.category-card small{font-size:10px;color:#8a8378}.category-card.active small{color:#d9d5ce}.category-card.muted{opacity:.7}
 
-.books-layout{display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:18px}
+.books-layout{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}
+.author-panel{grid-column:1/-1}
+.brevidade-cover{background:radial-gradient(circle at 82% 18%,rgba(168,137,84,.14),transparent 28%),linear-gradient(145deg,#f5efe4,#e9dfcc);color:#34352e;border:1px solid #e1d5bf;position:relative}
+.brevidade-cover strong{font-size:29px;line-height:1.05}
+.brevidade-cover>span,.brevidade-cover small{color:#87734e}
 .book-card{border:1px solid #d8cebc;background:#fbf7f0}
-.main-book{display:grid;grid-template-columns:220px 1fr}
+.main-book{display:grid;grid-template-columns:150px minmax(0,1fr)}
 .book-card-cover{
   min-height:330px;background:
   radial-gradient(circle at 70% 15%,rgba(224,181,87,.18),transparent 25%),
@@ -263,7 +267,7 @@ body.reader-night .settings-panel{background:#191d1b;color:#e7e1d8;border-color:
 @media(max-width:940px){
   .site-header{grid-template-columns:auto 1fr auto}.site-nav{display:none}.header-search span{display:none}.header-search{min-width:36px;width:36px;padding:0;justify-content:center}
   .hero-quote{display:none}.hero-inner{padding-right:30%}
-  .books-layout{grid-template-columns:1fr}.author-panel{display:grid;grid-template-columns:80px 1fr;column-gap:18px}.author-panel .eyebrow,.author-panel>a{grid-column:1/-1}
+  .books-layout{grid-template-columns:1fr}.main-book{grid-template-columns:180px minmax(0,1fr)}.author-panel{grid-column:1/-1;display:grid;grid-template-columns:80px 1fr;column-gap:18px}.author-panel .eyebrow,.author-panel>a{grid-column:1/-1}
   .category-row{grid-template-columns:repeat(2,1fr)}
   .site-footer{grid-template-columns:1fr 1fr}.site-footer p{display:none}
 }
@@ -368,7 +372,7 @@ body.reader-night .settings-panel{background:#191d1b;color:#e7e1d8;border-color:
     <section class="content-section" id="acervo">
       <div class="section-title-row">
         <div><span class="eyebrow">ACERVO</span><h2>Seus livros</h2></div>
-        <span>1 obra publicada</span>
+        <span>2 obras publicadas</span>
       </div>
 
       <div class="books-layout">
@@ -390,6 +394,25 @@ body.reader-night .settings-panel{background:#191d1b;color:#e7e1d8;border-color:
               <button class="outline-btn" id="bookDetails" type="button">Detalhes</button>
             </div>
             <span class="loading" id="loading">Preparando o livro…</span>
+          </div>
+        </article>
+        <article class="book-card main-book">
+          <div class="book-card-cover brevidade-cover">
+            <span>ROMANCE</span>
+            <strong>A Brevidade<br>das Coisas<br>Bonitas</strong>
+            <small>SENA</small>
+          </div>
+          <div class="book-card-body">
+            <span class="book-label">ROMANCE · 002</span>
+            <h3>A Brevidade das Coisas Bonitas</h3>
+            <p class="book-author">Sena</p>
+            <p>Uma história sobre amizade, amor e o tempo que descobrimos precioso quando ainda parece haver muito dele.</p>
+            <div class="progress-row"><span>Seu progresso</span><strong id="libProgressBrevidade">0%</strong></div>
+            <div class="progress-track"><i id="miniTrackBrevidade"></i></div>
+            <div class="book-buttons">
+              <a class="gold-btn compact" href="?livro=brevidade">Ler agora</a>
+              <a class="outline-btn" href="./books/A_Brevidade_das_Coisas_Bonitas.pdf" download>Baixar PDF</a>
+            </div>
           </div>
         </article>
 
@@ -447,7 +470,7 @@ body.reader-night .settings-panel{background:#191d1b;color:#e7e1d8;border-color:
 <section id="reader" class="screen reader-screen">
   <header class="reader-top">
     <button class="reader-icon" id="back" aria-label="Voltar à biblioteca">←</button>
-    <div class="reader-heading"><small id="chap">Capítulo 1</small><strong>Tudo o que o Silêncio Não Levou</strong></div>
+    <div class="reader-heading"><small id="chap">Capítulo 1</small><strong id="readerTitle">Tudo o que o Silêncio Não Levou</strong></div>
     <button class="reader-icon text-btn" id="aa" aria-label="Ajustes de leitura">Aa</button>
   </header>
   <main class="reading-desk">
@@ -484,6 +507,15 @@ let pagesData=[];
 let fs=19;
 const $=s=>document.querySelector(s);
 const $$=s=>Array.from(document.querySelectorAll(s));
+const selectedBook=new URLSearchParams(location.search).get('livro');
+const progressKey=()=>book && book.id==='brevidade-das-coisas-bonitas'?'sena_progress_brevidade':'sena_progress';
+const progressFor=key=>Math.max(0,Math.min(1,parseFloat(localStorage.getItem(key)||'0')||0));
+function paintProgress(id,pct){
+  const label=$('#'+(id==='primary'?'libProgress':'libProgressBrevidade'));
+  const track=$('#'+(id==='primary'?'miniTrack':'miniTrackBrevidade'));
+  if(label) label.textContent=pct+'%';
+  if(track) track.style.width=pct+'%';
+}
 
 async function loadBook(){
   const parts=[];
@@ -601,7 +633,7 @@ function buildPages(){
 
   if(!pagesData.length) pagesData=[{html:'<p>Livro indisponível.</p>',start:0,end:0,chapter:'Livro'}];
 
-  const saved=parseFloat(localStorage.getItem('sena_progress')||'0');
+  const saved=parseFloat(localStorage.getItem(progressKey())||'0');
   pageIndex=Math.min(pagesData.length-1,Math.max(0,Math.round(saved*(pagesData.length-1))));
   renderCurrent(false);
   buildTOC();
@@ -645,10 +677,10 @@ function updateMeta(){
   $('#slider').value=pct;
   $('#folioNum').textContent=pageIndex+1;
   $('#chap').textContent=data.chapter;
-  $('#libProgress').textContent=pct+'%';
-  $('#miniTrack').style.width=pct+'%';
+  $('#readerTitle').textContent=book.title;
+  paintProgress(book.id==='brevidade-das-coisas-bonitas'?'brevidade':'primary',pct);
   const cp=$('#continueProgress'); if(cp) cp.textContent=pct+'% lido';
-  localStorage.setItem('sena_progress',String(p));
+  localStorage.setItem(progressKey(),String(p));
 }
 
 function go(n,animate=true){
@@ -698,16 +730,18 @@ function resizeText(delta){
   if($('#reader').classList.contains('on')) setTimeout(buildPages,60);
 }
 
-$('#open').onclick=()=>{
+function openReader(){
   if(!book) return;
   $('#library').classList.remove('on');
   $('#reader').classList.add('on');
-  setTimeout(()=>{
-    buildPages();
-  },70);
+  setTimeout(buildPages,70);
+}
+$('#open').onclick=()=>{
+  if(selectedBook==='brevidade'){ location.href='?livro=silencio'; return; }
+  openReader();
 };
 
-const resume=()=>{ if(!book) return; $('#open').click(); };
+const resume=()=>{ if(!book) return; openReader(); };
 ['#resumeBottom','#resumeHero','#openFeatured'].forEach(sel=>{const el=$(sel); if(el) el.onclick=resume;});
 const details=$('#bookDetails'); if(details) details.onclick=()=>document.querySelector('#acervo')?.scrollIntoView({behavior:'smooth'});
 const searchBtn=$('#searchBtn'); if(searchBtn) searchBtn.onclick=()=>document.querySelector('#acervo')?.scrollIntoView({behavior:'smooth'});
@@ -827,16 +861,27 @@ if('serviceWorker' in navigator){
     setTheme(localStorage.getItem('sena_theme')||'paper');
     setFont(localStorage.getItem('sena_font')||'serif');
 
-    const saved=parseFloat(localStorage.getItem('sena_progress')||'0');
-    const pct=Math.round(saved*100);
-    $('#libProgress').textContent=pct+'%';
-    $('#miniTrack').style.width=pct+'%';
-    const cp=$('#continueProgress'); if(cp) cp.textContent=pct+'% lido';
+    const primarySaved=progressFor('sena_progress');
+    const brevidadeSaved=progressFor('sena_progress_brevidade');
+    paintProgress('primary',Math.round(primarySaved*100));
+    paintProgress('brevidade',Math.round(brevidadeSaved*100));
 
-    book=await loadBook();
+    if(selectedBook==='brevidade'){
+      const dataPath=location.pathname.includes('/app/')?'../data/brevidade.json':'./data/brevidade.json';
+      const response=await fetch(dataPath);
+      if(!response.ok) throw new Error('Falha ao carregar A Brevidade das Coisas Bonitas');
+      book=await response.json();
+    }else{
+      book=await loadBook();
+    }
+    const saved=progressFor(progressKey());
+    const pct=Math.round(saved*100);
+    const cp=$('#continueProgress'); if(cp) cp.textContent=pct+'% lido';
+    $('#readerTitle').textContent=book.title;
     $('#open').disabled=false;
-    $('#open span').textContent=saved>0?'Continuar leitura':'Entrar no livro';
+    $('#open span').textContent=selectedBook==='brevidade'?'Abrir o primeiro livro':(saved>0?'Continuar leitura':'Entrar no livro');
     $('#loading').textContent='Acervo disponível';
+    if(selectedBook==='brevidade') setTimeout(openReader,0);
   }catch(err){
     console.error(err);
     $('#loading').textContent='Não foi possível carregar o livro. Toque para tentar novamente.'; $('#open').disabled=false; $('#open span').textContent='Tentar novamente'; $('#open').onclick=()=>location.reload();
