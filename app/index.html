@@ -154,7 +154,7 @@ repeating-linear-gradient(0deg,rgba(139,111,74,.025) 0 1px,transparent 1px 4px)}
 .cat-art{font-size:24px;color:#b68d43}.category-card strong{font:600 20px "EB Garamond",serif}.category-card small{font-size:10px;color:#8a8378}.category-card.active small{color:#d9d5ce}.category-card.muted{opacity:.7}
 
 .books-layout{display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:18px}
-.book-card{border:1px solid #d8cebc;background:#fbf7f0}
+.book-card{border:1px solid #d8cebc;background:#fbf7f0}.brevidade-card{margin-top:18px}.brevidade-cover{background:radial-gradient(circle at 72% 15%,rgba(224,181,87,.16),transparent 25%),linear-gradient(145deg,#171d1a,#0d120f)}
 .main-book{display:grid;grid-template-columns:220px 1fr}
 .book-card-cover{
   min-height:330px;background:
@@ -368,7 +368,7 @@ body.reader-night .settings-panel{background:#191d1b;color:#e7e1d8;border-color:
     <section class="content-section" id="acervo">
       <div class="section-title-row">
         <div><span class="eyebrow">ACERVO</span><h2>Seus livros</h2></div>
-        <span>1 obra publicada</span>
+        <span>2 obras publicadas</span>
       </div>
 
       <div class="books-layout">
@@ -401,6 +401,25 @@ body.reader-night .settings-panel{background:#191d1b;color:#e7e1d8;border-color:
           <a href="#poemas">Ler textos do autor →</a>
         </aside>
       </div>
+
+      <article class="book-card main-book brevidade-card">
+        <div class="book-card-cover brevidade-cover">
+          <span>ROMANCE</span>
+          <strong>A Brevidade das<br>Coisas Bonitas</strong>
+          <small>SENA</small>
+        </div>
+        <div class="book-card-body">
+          <span class="book-label">ROMANCE · 002</span>
+          <h3>A Brevidade das Coisas Bonitas</h3>
+          <p class="book-author">Sena</p>
+          <p>Tomás e Lívia descobrem que algumas histórias não precisam durar para sempre para transformar uma vida inteira.</p>
+          <div class="progress-row"><span>Seu progresso</span><strong id="brevidadeHomePct">0%</strong></div>
+          <div class="progress-track"><i id="brevidadeHomeTrack"></i></div>
+          <div class="book-buttons">
+            <a href="./brevidade.html" class="gold-btn compact">Entrar no livro</a>
+          </div>
+        </div>
+      </article>
     </section>
 
     <section class="poem-feature" id="poemas">
@@ -643,6 +662,9 @@ function updateMeta(){
   $('#libProgress').textContent=pct+'%';
   $('#miniTrack').style.width=pct+'%';
   const cp=$('#continueProgress'); if(cp) cp.textContent=pct+'% lido';
+    const bp=parseFloat(localStorage.getItem('brevidade_progress')||'0'), bpc=Math.round(bp*100);
+    const bhp=$('#brevidadeHomePct'); if(bhp) bhp.textContent=bpc+'%';
+    const bht=$('#brevidadeHomeTrack'); if(bht) bht.style.width=bpc+'%';
   localStorage.setItem('sena_progress',String(p));
 }
 
